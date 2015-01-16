@@ -1,45 +1,42 @@
 [[promises-overview]]
 == Promise Overview
 
-<<es6-promises,ES6 Promises>>の仕様で定義されているAPIはそこまで多くはありません。
+Not so many APIs are defined in <<es6-promises,ES6 Promises>> specification.
 
-大きく分けて以下の3種類になります。
+They can be categolized for following 3:
 
 *Constructor*
 
-Promiseは `XMLHttpRequest` のように、コンストラクタ関数である `Promise` からインスタンスとなる
-promiseオブジェクトを作成して利用します。
+Like `XMLHttpRequest`, you create promise object (instance) by the constructor function `Promise`.
 
-promiseオブジェクトを作成するには、`Promise` コンストラクタを `new` でインスタンス化します。
+You can create promise object by instanciating `Promise` constructor by `new`.
 
 [source,javascript]
 ----
 var promise = new Promise(function(resolve, reject) {
-    // 非同期の処理
-    // 処理が終わったら、resolve または rejectを呼ぶ
+    // Asynchronous process
+    // After the process finished, call resolve or reject
 });
 ----
 
 *Instance Method*
 
-newによって生成されたpromiseオブジェクトにはpromiseの値を *resolve*(成功) / *reject*(失敗) した時に呼ばれる
-コールバック関数を登録するために `promise.then()` というインスタンスメソッドがあります。
+promise object has an instance method named `promise.then()` to register a callback function which is called when the promise is *resolve*d (success) or *reject*ed (failure)
 
 [source,javascript]
 ----
 promise.then(onFulfilled, onRejected)
 ----
 
-resolve(成功)した時::
-    `onFulfilled` が呼ばれる
-reject(失敗)した時::
-    `onRejected`  が呼ばれる
+When resolved (success)::
+    `onFulfilled` is called
+When rejected (failure)::
+    `onRejected` is called
 
-`onFulfilled`、`onRejected` どちらもオプショナルな引数となっています。
+Both `onFulfilled`、`onRejected` are optional arguments.
 
-`promise.then` では成功時と失敗時の処理を同時に登録することが出来ます。
-また、エラー処理だけを書きたい場合には `promise.then(undefined, onRejected)` と同じ意味である
-`promise.catch(onRejected)` を使うことが出来ます。
+You can register functions both on success and on failure in `promise.then`.
+If you only write error process, you can use `promise.catch(onRejected)` which is same as `promise.then(undefined, onRejected)`.
 
 [source,javascript]
 promise.catch(onRejected)
@@ -47,14 +44,14 @@ promise.catch(onRejected)
 
 *Static Method*
 
-`Promise` というグローバルオブジェクトには幾つかの静的なメソッドが存在します。
+Global object `Promise` has some static methods.
 
-`Promise.all()` や `Promise.resolve()` などが該当し、Promiseを扱う上での補助メソッドが中心となっています。
+For example, `Promise.all()` and `Promise.resolve()`. Most of them are supportive methods when you use Promise.
 
 
 === Promise workflow
 
-以下のようなサンプルコードを見てみましょう。
+Let's consider about following example.
 
 [role="executable"]
 [source,javascript]
